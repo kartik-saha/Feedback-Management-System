@@ -6,6 +6,7 @@ import Notifications from './pages/Notifications/Notifications';
 import CreateSurvey from './pages/CreateSurvey/CreateSurvey';
 import Analytics from './pages/Analytics/Analytics';
 import Home from './pages/Home/Home';
+import ViewSurvey from './pages/ViewSurvey/ViewSurvey'; // ✅ Import ViewSurvey
 import usePageTitle from './hooks/usePageTitle';
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
 
   return (
     <Routes>
+      {/* All routes wrapped in Dashboard layout */}
       <Route
         element={
           <>
@@ -28,6 +30,7 @@ export default function App() {
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/create" element={<CreateSurvey />} />
         <Route path="/analytics" element={<Analytics />} />
+        <Route path="/survey/:id" element={<ViewSurvey />} /> {/* ✅ Now inside dashboard */}
       </Route>
     </Routes>
   );

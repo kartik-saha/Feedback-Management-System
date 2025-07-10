@@ -53,8 +53,13 @@
 html, body {
   margin: 0;
   padding: 0;
-  font-family: var(--font-family);
+  font-family: var(--font-family); /* This handles body text */
   background-color: var(--primary-bg);
   color: var(--primary-font);
   transition: background-color 0.8s ease, color 0.8s ease;
+}
+
+/* Add this block to apply the font to all form elements */
+input, textarea, select, button {
+  font-family: var(--font-family);
 }

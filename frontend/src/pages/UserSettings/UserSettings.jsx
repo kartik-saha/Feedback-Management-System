@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import './UserSettings.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 export default function UserSettings() {
   const [userData, setUserData] = useState({ username: '', email: '', password: '' });
-  const [showPassword, setShowPassword] = useState(false);
   const [editingField, setEditingField] = useState(null);
 
   const [editValues, setEditValues] = useState({
@@ -164,13 +163,7 @@ export default function UserSettings() {
         <div className="settings-row">
           <label>Password:</label>
           <span>
-            {showPassword  ? userData.password || '[no password]'  : '••••••••'}
-            <button
-              className="icon-btn"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-            </button>
+            ••••••••
             <button className="icon-btn" onClick={() => toggleEdit('password')}>
               <FontAwesomeIcon icon={faEdit} />
             </button>
