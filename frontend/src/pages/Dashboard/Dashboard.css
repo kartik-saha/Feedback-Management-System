@@ -1,0 +1,76 @@
+.dashboard-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--primary-bg);
+  color: var(--primary-font);
+  box-shadow: var(--header-shadow);
+  z-index: 999;
+  padding: 16px 0;
+  transition: background-color 0.8s ease, color 0.8s ease;
+}
+
+.dashboard-container {
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.logo-placeholder {
+  width: 120px;
+  height: 40px;
+  border: none;
+}
+
+.search-bar {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar input {
+  width: 100%;
+  max-width: 400px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  background-color: var(--input-bg);
+  color: var(--primary-font);
+  font-size: 1rem;
+  transition: background-color 0.8s ease, color 0.8s ease;
+}
+
+.search-bar input::placeholder {
+  color: var(--placeholder-font);
+}
+
+.dashboard-buttons {
+  display: flex;
+  gap: 16px;
+}
+.icon-btn {
+  width: 50px;
+  height: 50px;
+  border: 2px solid var(--btn-1);
+  border-radius: 50%;
+  font-size: 1.25rem;
+  background-color: transparent;
+  color: var(--btn-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.icon-btn:hover {
+  background-color: var(--btn-1-hover);
+  color: white;
+  border-color: var(--btn-1);
+}

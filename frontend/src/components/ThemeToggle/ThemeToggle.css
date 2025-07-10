@@ -1,0 +1,55 @@
+.theme-toggle {
+  position: relative;
+  width: 96px;   /* Doubled from 48px */
+  height: 50px;  /* Doubled from 26px */
+  display: inline-block;
+}
+
+.theme-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.theme-toggle .slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;  /* Doubled from 4px */
+  box-sizing: border-box;
+  border-radius: 34px;
+  cursor: pointer;
+  background-color: var(--btn-1-hover);
+  border: 2px solid var(--btn-1);
+  transition: background-color 0.8s ease;
+}
+/* 
+.theme-toggle input:checked + .slider {
+  background-color: blue
+} */
+
+.theme-toggle .knob {
+  width: 36px;  /* Doubled from 18px */
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--primary-font);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(0);
+  transition: background-color 0.8s ease, transform 0.8s ease;
+}
+
+.theme-toggle input:checked + .slider .knob {
+  transform: translateX(44px);  /* Adjusted for the new width (96 - 36 - 2*8) */
+}
+
+.theme-toggle .icon {
+  font-size: 24px;  /* Doubled from 12px */
+  color: var(--primary-bg);
+  transition: color 0.8s ease;
+}
