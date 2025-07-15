@@ -1,8 +1,14 @@
+:root {
+  --transition-duration: 0.5s;
+  --text-transition-duration: 0.2s;
+}
+
 .settings-container {
   padding: 24px;
   max-width: 600px;
   margin: auto;
   color: var(--primary-font);
+  transition: color var(--text-transition-duration);
 }
 
 .settings-block {
@@ -11,6 +17,7 @@
   padding: 20px;
   margin-bottom: 16px;
   box-shadow: var(--header-shadow);
+  transition: background-color var(--transition-duration), box-shadow var(--transition-duration);
 }
 
 .settings-row {
@@ -18,16 +25,19 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
+  transition: color var(--text-transition-duration);
 }
 
 .settings-row label {
   font-weight: bold;
+  transition: color var(--text-transition-duration);
 }
 
 .settings-row span {
   display: flex;
   align-items: center;
   gap: 10px;
+  transition: color var(--text-transition-duration);
 }
 
 .edit-form {
@@ -43,6 +53,7 @@
   border: none;
   background: var(--input-bg);
   color: var(--primary-font);
+  transition: background-color var(--transition-duration), color var(--text-transition-duration);
 }
 
 .save-btn {
@@ -53,6 +64,7 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
+  transition: background-color var(--transition-duration), color var(--text-transition-duration);
 }
 
 .icon-btn {
@@ -62,4 +74,5 @@
   cursor: pointer;
   font-size: 1rem;
   padding: 4px;
+  transition: color var(--text-transition-duration);
 }

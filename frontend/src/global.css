@@ -1,13 +1,18 @@
+:root {
+  --font-family: 'Comfortaa', cursive;
+  --transition-duration: 0.5s;
+}
+
 :root[data-theme='dark'] {
-  --primary-bg: #121212;           /* Dark gray */
-  --input-bg: #2a2a2a;             /* Slightly lighter gray */
+  --primary-bg: #121212;
+  --input-bg: #2a2a2a;
   --primary-font: #ffffff;
   --placeholder-font: #9e9e9e;
 
-  --btn-1: #999999;                /* Grayscale button */
+  --btn-1: #999999;
   --btn-1-hover: #666666;
 
-  --btn-2: #4fb29b;                /* Colorful (unchanged) */
+  --btn-2: #4fb29b;
   --btn-2-hover: #399580;
 
   --btn-3: #e2a556;
@@ -28,16 +33,16 @@
   --primary-font: #222;
   --placeholder-font: #777;
 
-  --btn-1: #606060;            /* Darker grayscale button */
+  --btn-1: #606060;
   --btn-1-hover: #909090;
 
-  --btn-2: #579e8b;            /* Darker muted teal */
+  --btn-2: #579e8b;
   --btn-2-hover: #3f8473;
 
-  --btn-3: #d19b50;            /* Darker muted amber */
+  --btn-3: #d19b50;
   --btn-3-hover: #b9813a;
 
-  --btn-4: #c97878;            /* Darker muted red */
+  --btn-4: #c97878;
   --btn-4-hover: #ac5c5c;
 
   --secondary-bg: #cccccc;
@@ -46,20 +51,14 @@
   --header-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
-:root {
-  --font-family: 'Comfortaa', cursive;
-}
-
 html, body {
   margin: 0;
   padding: 0;
-  font-family: var(--font-family); /* This handles body text */
-  background-color: var(--primary-bg);
+  font-family: var(--font-family);
   color: var(--primary-font);
-  transition: background-color 0.8s ease, color 0.8s ease;
+  transition: background-color var(--transition-duration) ease, color var(--transition-duration) ease;
 }
 
-/* Add this block to apply the font to all form elements */
 input, textarea, select, button {
   font-family: var(--font-family);
 }

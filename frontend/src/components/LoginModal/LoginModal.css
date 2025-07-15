@@ -36,7 +36,8 @@
   padding: 12px;
   cursor: pointer;
   border-bottom: 2px solid transparent;
-  transition: color 0.2s, border-bottom-color 0.2s;
+  transition: color var(--transition-duration),
+              border-bottom-color var(--transition-duration);
 }
 
 .modal-tabs button.active {
@@ -76,7 +77,9 @@
   border: 2px solid var(--btn-1);
   cursor: pointer;
   font-weight: bold;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition: background-color var(--transition-duration) ease,
+              border-color var(--transition-duration) ease,
+              color var(--transition-duration) ease;
 }
 
 .modal-form button:hover {

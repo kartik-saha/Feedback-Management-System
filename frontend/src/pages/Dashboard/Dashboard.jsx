@@ -34,10 +34,10 @@ export default function Dashboard() {
           className="logo-placeholder"
           onClick={() => navigate('/')}
         />
-
+{/* 
         <div className="search-bar">
           <input type="text" placeholder="Search..." />
-        </div>
+        </div> */}
 
         <nav className="dashboard-buttons">
           <ThemeToggle />

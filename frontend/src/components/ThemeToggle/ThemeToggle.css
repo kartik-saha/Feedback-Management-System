@@ -1,7 +1,7 @@
 .theme-toggle {
   position: relative;
-  width: 96px;   /* Doubled from 48px */
-  height: 50px;  /* Doubled from 26px */
+  width: 96px;
+  height: 50px;
   display: inline-block;
 }
 
@@ -19,21 +19,18 @@
   bottom: 0;
   display: flex;
   align-items: center;
-  padding: 0 8px;  /* Doubled from 4px */
+  padding: 0 8px;
   box-sizing: border-box;
   border-radius: 34px;
   cursor: pointer;
   background-color: var(--btn-1-hover);
   border: 2px solid var(--btn-1);
-  transition: background-color 0.8s ease;
+  transition: background-color var(--transition-duration) ease,
+              border-color var(--transition-duration) ease;
 }
-/* 
-.theme-toggle input:checked + .slider {
-  background-color: blue
-} */
 
 .theme-toggle .knob {
-  width: 36px;  /* Doubled from 18px */
+  width: 36px;
   height: 36px;
   border-radius: 50%;
   background-color: var(--primary-font);
@@ -41,15 +38,16 @@
   align-items: center;
   justify-content: center;
   transform: translateX(0);
-  transition: background-color 0.8s ease, transform 0.8s ease;
+  transition: background-color var(--transition-duration) ease,
+              transform var(--transition-duration) ease;
 }
 
 .theme-toggle input:checked + .slider .knob {
-  transform: translateX(44px);  /* Adjusted for the new width (96 - 36 - 2*8) */
+  transform: translateX(44px);
 }
 
 .theme-toggle .icon {
-  font-size: 24px;  /* Doubled from 12px */
+  font-size: 24px;
   color: var(--primary-bg);
-  transition: color 0.8s ease;
+  transition: color var(--transition-duration) ease;
 }

@@ -5,6 +5,7 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+  transition: transform var(--transition-duration) linear;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -26,6 +27,7 @@
 
 .App-link {
   color: #61dafb;
+  transition: color var(--transition-duration);
 }
 
 @keyframes App-logo-spin {

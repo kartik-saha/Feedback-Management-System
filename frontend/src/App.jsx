@@ -13,25 +13,26 @@ export default function App() {
   usePageTitle();
 
   return (
-    <Routes>
-      {/* All routes wrapped in Dashboard layout */}
-      <Route
-        element={
-          <>
-            <Dashboard />
-            <main style={{ paddingTop: '80px' }}>
-              <Outlet />
-            </main>
-          </>
-        }
-      >
-        <Route index element={<Home />} />
-        <Route path="/settings" element={<UserSettings />} />
-        <Route path="/notifications" element={<Notifications />} />
-        <Route path="/create" element={<CreateSurvey />} />
-        <Route path="/analytics" element={<Analytics />} />
-        <Route path="/survey/:id" element={<ViewSurvey />} /> {/* ✅ Now inside dashboard */}
-      </Route>
-    </Routes>
+    <div className="App">
+      <Routes>
+        <Route
+          element={
+            <>
+              <Dashboard />
+              <main style={{ paddingTop: '80px' }}>
+                <Outlet />
+              </main>
+            </>
+          }
+        >
+          <Route index element={<Home />} />
+          <Route path="/settings" element={<UserSettings />} />
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/create" element={<CreateSurvey />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/survey/:id" element={<ViewSurvey />} />
+        </Route>
+      </Routes>
+    </div>
   );
 }

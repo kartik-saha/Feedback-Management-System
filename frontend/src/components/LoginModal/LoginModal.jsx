@@ -2,10 +2,14 @@ import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import './LoginModal.css';
 
-export default function LoginModal({ onClose }) {
+export default function LoginModal({ onClose, initialTab = 'login' }) {
   const { login } = useAuth();
-  const [activeTab, setActiveTab] = useState('login');
+  const [activeTab, setActiveTab] = useState(initialTab);
   const modalRef = useRef(null);
+
+  useEffect(() => {
+    setActiveTab(initialTab);
+  }, [initialTab]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,8 +25,8 @@ export default function LoginModal({ onClose }) {
 
       const data = await res.json();
       if (res.ok) {
-        localStorage.setItem('token', data.token); // ✅ Store JWT
-        login(data.user); // Optional: store user in context
+        localStorage.setItem('token', data.token);
+        login(data.user);
         onClose();
       } else {
         alert(data.message || 'Login failed');
@@ -53,8 +57,8 @@ export default function LoginModal({ onClose }) {
 
       const data = await res.json();
       if (res.ok) {
-        localStorage.setItem('token', data.token); // ✅ Store JWT after registration
-        login(data.user); // Optional
+        localStorage.setItem('token', data.token);
+        login(data.user);
         onClose();
       } else {
         alert(data.message || 'Registration failed');

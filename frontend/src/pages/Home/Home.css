@@ -1,0 +1,172 @@
+:root {
+  --transition-duration: 0.5s;
+  --text-transition-duration: 0.2s;
+}
+
+body {
+  margin: 0;
+  background-color: var(--primary-bg);
+  color: var(--primary-font);
+  transition: background-color var(--transition-duration), color var(--text-transition-duration);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 2rem 0;
+  transition: color var(--text-transition-duration);
+}
+
+.section {
+  background-color: var(--secondary-bg);
+  position: relative;
+  overflow: hidden;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 2rem;
+  border-radius: 12px;
+  transition: background-color var(--transition-duration);
+}
+
+.graph-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+  opacity: 0.3;
+}
+
+.text-content {
+  position: relative;
+  z-index: 2;
+  color: var(--primary-font);
+  max-width: 700px;
+  padding: 2rem;
+  text-align: center;
+  transition: color var(--text-transition-duration);
+}
+
+.text-content h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  color: var(--primary-font);
+  transition: color var(--text-transition-duration);
+}
+
+.text-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  transition: color var(--text-transition-duration);
+}
+
+.left {
+  text-align: left;
+  margin-left: 2rem;
+}
+
+.right {
+  text-align: right;
+  margin-right: 2rem;
+}
+
+.center {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.no-graph {
+  background-color: var(--secondary-bg);
+}
+
+/* === SOCIAL TILE BACKGROUND === */
+.icon-tiles .icon-grid {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 100px);
+  gap: 20px;
+  transform: rotate(-25deg);
+  z-index: 1;
+  opacity: 0.35;
+  animation: scroll-tiles 60s linear infinite;
+}
+
+.icon-tile {
+  color: var(--btn-3);
+  font-size: 24px;
+  transition: color var(--text-transition-duration);
+}
+
+@keyframes scroll-tiles {
+  0% {
+    transform: rotate(-25deg) translate(0, 0);
+  }
+  100% {
+    transform: rotate(-25deg) translate(100px, 100px);
+  }
+}
+
+/* === TOP BANNER === */
+.top-banner {
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--primary-bg);
+  border-bottom: 1px solid #ccc;
+  transition: background-color var(--transition-duration);
+}
+
+.top-banner h1.app-name {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-font);
+  transition: color var(--text-transition-duration);
+}
+
+.top-banner p {
+  font-size: 1.1rem;
+  transition: color var(--text-transition-duration);
+}
+
+/* === BUTTONS === */
+.primary-btn {
+  background-color: var(--btn-1);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color var(--transition-duration), color var(--text-transition-duration);
+}
+
+.primary-btn:hover {
+  background-color: var(--btn-1-hover);
+}
+
+/* CTA text style replacing button */
+.cta-text {
+  font-size: 1.1rem;
+  color: var(--btn-1);
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color var(--transition-duration) linear;
+  margin-top: 1rem;
+}
+
+.cta-text:hover {
+  color: var(--btn-1-hover);
+}

@@ -8,7 +8,7 @@
   box-shadow: var(--header-shadow);
   z-index: 999;
   padding: 16px 0;
-  transition: background-color 0.8s ease, color 0.8s ease;
+  transition: background-color var(--transition-duration) ease, color var(--transition-duration) ease;
 }
 
 .dashboard-container {
@@ -43,7 +43,7 @@
   background-color: var(--input-bg);
   color: var(--primary-font);
   font-size: 1rem;
-  transition: background-color 0.8s ease, color 0.8s ease;
+  transition: background-color var(--transition-duration) ease, color var(--transition-duration) ease;
 }
 
 .search-bar input::placeholder {
@@ -54,6 +54,7 @@
   display: flex;
   gap: 16px;
 }
+
 .icon-btn {
   width: 50px;
   height: 50px;
@@ -66,7 +67,9 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition: background-color var(--transition-duration) ease,
+              color var(--transition-duration) ease,
+              border-color var(--transition-duration) ease;
 }
 
 .icon-btn:hover {
