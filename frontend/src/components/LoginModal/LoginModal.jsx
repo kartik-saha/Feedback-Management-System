@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { useAuth } from '../../context/AuthContext';
+
 import './LoginModal.css';
 
 export default function LoginModal({ onClose, initialTab = 'login' }) {
@@ -26,14 +28,15 @@ export default function LoginModal({ onClose, initialTab = 'login' }) {
       const data = await res.json();
       if (res.ok) {
         localStorage.setItem('token', data.token);
-        login(data.user);
+        login(); // ✅ updates context
+        toast.success('Logged in successfully!');
         onClose();
       } else {
-        alert(data.message || 'Login failed');
+        toast.error(data.message || 'Login failed');
       }
     } catch (err) {
       console.error(err);
-      alert('An error occurred during login.');
+      toast.error('An error occurred during login.');
     }
   };
 
@@ -45,7 +48,7 @@ export default function LoginModal({ onClose, initialTab = 'login' }) {
     const confirm = e.target[3].value;
 
     if (password !== confirm) {
-      return alert('Passwords do not match');
+      return toast.error('Passwords do not match');
     }
 
     try {
@@ -58,14 +61,15 @@ export default function LoginModal({ onClose, initialTab = 'login' }) {
       const data = await res.json();
       if (res.ok) {
         localStorage.setItem('token', data.token);
-        login(data.user);
+        login(); // ✅ updates context
+        toast.success('Registration successful!');
         onClose();
       } else {
-        alert(data.message || 'Registration failed');
+        toast.error(data.message || 'Registration failed');
       }
     } catch (err) {
       console.error(err);
-      alert('An error occurred during registration.');
+      toast.error('An error occurred during registration.');
     }
   };
 

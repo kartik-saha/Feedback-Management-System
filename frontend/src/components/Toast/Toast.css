@@ -1,0 +1,52 @@
+/* Positioning */
+.custom-toast-container {
+  top: 6rem;
+  right: 1rem;
+}
+
+/* Core toast appearance */
+.custom-toast {
+  background-color: var(--primary-bg) !important;
+  color: var(--primary-font) !important;
+  border-radius: 8px;
+  font-weight: 500;
+  border: 1px solid var(--btn-1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Remove react-toastify's type-based background styling */
+.custom-toast.Toastify__toast--success,
+.custom-toast.Toastify__toast--error,
+.custom-toast.Toastify__toast--info,
+.custom-toast.Toastify__toast--warning {
+  background-color: var(--primary-bg) !important;
+  color: var(--primary-font) !important;
+}
+
+/* Custom progress bar */
+.custom-toast-progress,
+.Toastify__progress-bar {
+  background-color: var(--btn-1) !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* Remove default fade overlay colors */
+.Toastify__progress-bar--success,
+.Toastify__progress-bar--error,
+.Toastify__progress-bar--warning,
+.Toastify__progress-bar--info {
+  background-color: var(--btn-1) !important;
+}
+
+/* Icon color (tick, cross, etc.) */
+.custom-toast .Toastify__toast-icon svg {
+  fill: var(--btn-1) !important;
+}
+
+/* Close button styling */
+.custom-toast .Toastify__close-button {
+  color: var(--primary-font);
+  opacity: 0.8;
+}

@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './CreateSurvey.css';
+import { showSuccess, showError } from '../../components/Toast/Toast'; // ✅ Removed ToastWrapper
 
 export default function CreateSurvey() {
   const [surveyTitle, setSurveyTitle] = useState('Untitled Survey');
@@ -52,9 +53,7 @@ export default function CreateSurvey() {
         q.id === qId
           ? {
               ...q,
-              options: q.options.map((opt, i) =>
-                i === index ? value : opt
-              ),
+              options: q.options.map((opt, i) => (i === index ? value : opt)),
             }
           : q
       )
@@ -104,15 +103,21 @@ export default function CreateSurvey() {
       if (response.ok) {
         const link = `${window.location.origin}/survey/${data.surveyId}`;
         setShareLink(link);
+        showSuccess('Survey saved successfully!');
       } else {
-        alert(data.message || 'Failed to save survey.');
+        showError(data.message || 'Failed to save survey.');
       }
     } catch (err) {
       console.error(err);
-      alert('Error saving survey.');
+      showError('Error saving survey.');
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(shareLink);
+    showSuccess('Link copied to clipboard!');
   };
 
   return (
@@ -204,15 +209,18 @@ export default function CreateSurvey() {
           </button>
 
           <div className="save-share">
-            <button className="save-btn" onClick={handleSaveSurvey} disabled={saving}>
-              {saving ? 'Saving...' : 'Save + Share'}
-            </button>
-            {shareLink && (
-              <div className="share-link-box">
-                <p>Survey created by <strong>{username}</strong></p>
-                <p>Share this link:</p>
-                <input type="text" value={shareLink} readOnly />
-              </div>
+            {!shareLink ? (
+              <button
+                className="save-btn"
+                onClick={handleSaveSurvey}
+                disabled={saving}
+              >
+                {saving ? 'Saving...' : 'Save + Share'}
+              </button>
+            ) : (
+              <button className="save-btn" onClick={handleCopyLink}>
+                {shareLink}
+              </button>
             )}
           </div>
         </div>

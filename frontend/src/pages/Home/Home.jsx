@@ -1,6 +1,8 @@
 // src/pages/Home/Home.jsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // ✅ Added
 import './Home.css';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFacebookF,
@@ -17,6 +19,7 @@ import GraphCanvas from './GraphCanvas';
 
 const Home = () => {
   const { isLoggedIn } = useAuth();
+  const navigate = useNavigate(); // ✅ Added
   const [showModal, setShowModal] = useState(false);
   const [modalTab, setModalTab] = useState('login');
 
@@ -58,7 +61,14 @@ const Home = () => {
             .
           </p>
         ) : (
-          <a href="/create" className="primary-btn">Create a New Survey</a>
+          <p>
+            <span
+              className="link-like cta-text"
+              onClick={() => navigate('/create')}
+            >
+              Create a New Survey
+            </span>
+          </p>
         )}
       </section>
 
@@ -66,7 +76,9 @@ const Home = () => {
         <GraphCanvas type="bar" />
         <div className="text-content left">
           <h2>Create Surveys</h2>
-          <p>Design powerful, customizable surveys with multiple question types to suit your research or feedback goals.</p>
+          <p>
+            Design powerful, customizable surveys with multiple question types to suit your research or feedback goals.
+          </p>
         </div>
       </section>
 
@@ -78,7 +90,9 @@ const Home = () => {
         </div>
         <div className="text-content center">
           <h2>Share with Anyone</h2>
-          <p>Send your surveys instantly through links or email. No login required for your participants—simple and seamless.</p>
+          <p>
+            Send your surveys instantly through links or email. No login required for your participants—simple and seamless.
+          </p>
         </div>
       </section>
 
@@ -86,7 +100,9 @@ const Home = () => {
         <GraphCanvas type="line" />
         <div className="text-content right">
           <h2>Analyze Results</h2>
-          <p>Interpret data through visualizations that highlight trends, patterns, and outliers across responses.</p>
+          <p>
+            Interpret data through visualizations that highlight trends, patterns, and outliers across responses.
+          </p>
         </div>
       </section>
 
