@@ -1,3 +1,15 @@
+:root {
+  --transition-duration: 0.5s;
+  --text-transition-duration: 0.2s;
+}
+
+body {
+  margin: 0;
+  background-color: var(--primary-bg);
+  color: var(--primary-font);
+  transition: background-color var(--transition-duration), color var(--text-transition-duration);
+}
+
 .page-content {
   padding: 40px 20px;
   display: flex;
@@ -6,12 +18,15 @@
   gap: 24px;
   background: var(--primary-bg);
   color: var(--primary-font);
+  min-height: 100vh;
+  transition: background-color var(--transition-duration), color var(--text-transition-duration);
 }
 
 /* Shared width */
 .survey-container {
   width: 100%;
   max-width: 700px;
+  transition: background-color var(--transition-duration), color var(--text-transition-duration);
 }
 
 /* Title above input */
@@ -20,6 +35,7 @@
   margin-bottom: 16px;
   font-size: 2rem;
   font-weight: 600;
+  transition: color var(--text-transition-duration);
 }
 
 /* Input for the survey title */
@@ -34,6 +50,7 @@
   width: 100%;
   box-sizing: border-box;
   text-align: center;
+  transition: background-color var(--transition-duration), color var(--text-transition-duration);
 }
 
 /* Segment wrapper */
@@ -54,6 +71,7 @@
   gap: 14px;
   width: 100%;
   box-sizing: border-box;
+  transition: background-color var(--transition-duration), color var(--text-transition-duration);
 }
 
 /* Inputs inside each block */
@@ -67,6 +85,7 @@
   color: var(--primary-font);
   font-size: 1rem;
   resize: vertical;
+  transition: background-color var(--transition-duration), color var(--text-transition-duration);
 }
 
 /* Multiple choice / checkbox option */
@@ -84,6 +103,7 @@
   cursor: pointer;
   font-weight: 600;
   padding: 6px 0;
+  transition: color var(--transition-duration);
 }
 
 /* Add Segment button */
@@ -95,7 +115,7 @@
   border: 2px solid var(--btn-1);
   cursor: pointer;
   font-weight: bold;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition: background-color var(--transition-duration), border-color var(--transition-duration), color var(--text-transition-duration);
 }
 
 .save-btn:hover {
@@ -112,4 +132,14 @@ textarea {
   background: var(--input-bg);
   color: var(--primary-font);
   resize: vertical;
+  transition: background-color var(--transition-duration), color var(--text-transition-duration);
+}
+
+.survey-creator-name {
+  text-align: right;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  font-size: 0.9em;
+  font-style: italic;
+  color: #555;
 }

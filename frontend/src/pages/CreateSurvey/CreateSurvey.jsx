@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './CreateSurvey.css';
 
 export default function CreateSurvey() {
@@ -6,6 +6,27 @@ export default function CreateSurvey() {
   const [questions, setQuestions] = useState([]);
   const [shareLink, setShareLink] = useState('');
   const [saving, setSaving] = useState(false);
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+
+        const res = await fetch('http://localhost:5000/api/auth/me', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const data = await res.json();
+        if (res.ok) setUsername(data.username);
+      } catch (err) {
+        console.error('Failed to fetch user info', err);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   const addSegment = () => {
     const newQuestion = {
@@ -55,7 +76,10 @@ export default function CreateSurvey() {
           ? {
               ...q,
               type: newType,
-              options: newType === 'multiple-choice' || newType === 'checkboxes' ? [''] : [],
+              options:
+                newType === 'multiple-choice' || newType === 'checkboxes'
+                  ? ['']
+                  : [],
             }
           : q
       )
@@ -65,9 +89,14 @@ export default function CreateSurvey() {
   const handleSaveSurvey = async () => {
     setSaving(true);
     try {
+      const token = localStorage.getItem('token');
+
       const response = await fetch('http://localhost:5000/api/surveys', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({ name: surveyTitle, segments: questions }),
       });
 
@@ -97,6 +126,7 @@ export default function CreateSurvey() {
           className="survey-title-input"
           placeholder="Survey Title"
         />
+        {username && <div className="survey-creator-name">- {username}</div>}
       </div>
 
       <div className="modal survey-builder survey-container">
@@ -179,6 +209,7 @@ export default function CreateSurvey() {
             </button>
             {shareLink && (
               <div className="share-link-box">
+                <p>Survey created by <strong>{username}</strong></p>
                 <p>Share this link:</p>
                 <input type="text" value={shareLink} readOnly />
               </div>

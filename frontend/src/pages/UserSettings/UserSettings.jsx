@@ -18,19 +18,23 @@ export default function UserSettings() {
   useEffect(() => {
     async function fetchUser() {
       try {
-        const res = await fetch('http://localhost:5000/api/user/profile', {
+        const res = await fetch('http://localhost:5000/api/auth/me', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         });
+
         const data = await res.json();
+        console.log('📥 Response from /me:', data);
+
         if (res.ok) {
           setUserData(data);
+          console.log('✅ User data set in state:', data);
         } else {
-          console.error(data.message || data.error);
+          console.error('❌ Backend error:', data.message || data.error);
         }
       } catch (err) {
-        console.error('Failed to fetch user data:', err);
+        console.error('🚫 Fetch error:', err);
       }
     }
 
@@ -76,13 +80,16 @@ export default function UserSettings() {
       });
 
       const data = await res.json();
+      console.log('📤 Update response:', data);
+
       if (!res.ok) throw new Error(data.message || 'Update failed');
 
       alert(data.message || 'Updated successfully');
       setEditingField(null);
-      window.location.reload(); // Or refetch the data instead
+      window.location.reload(); // Optionally refetch instead
     } catch (err) {
       alert(err.message);
+      console.error('❌ Save error:', err.message);
     }
   };
 
@@ -95,7 +102,7 @@ export default function UserSettings() {
         <div className="settings-row">
           <label>Username:</label>
           <span>
-            {userData.username}
+            {userData.username || 'Loading...'}
             <button className="icon-btn" onClick={() => toggleEdit('username')}>
               <FontAwesomeIcon icon={faEdit} />
             </button>
@@ -129,7 +136,7 @@ export default function UserSettings() {
         <div className="settings-row">
           <label>Email:</label>
           <span>
-            {userData.email}
+            {userData.email || 'Loading...'}
             <button className="icon-btn" onClick={() => toggleEdit('email')}>
               <FontAwesomeIcon icon={faEdit} />
             </button>

@@ -5,7 +5,7 @@
   right: 0;
   background-color: var(--primary-bg);
   color: var(--primary-font);
-  box-shadow: var(--header-shadow);
+  border-bottom: 1px solid silver; /* ✅ Thin silver line */
   z-index: 999;
   padding: 16px 0;
   transition: background-color var(--transition-duration) ease, color var(--transition-duration) ease;

@@ -42,7 +42,6 @@ body {
   height: 100%;
   width: 100%;
   z-index: 0;
-  opacity: 0.3;
 }
 
 .text-content {
@@ -169,4 +168,15 @@ body {
 
 .cta-text:hover {
   color: var(--btn-1-hover);
+}
+
+.graph-bg {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: block;
+  width: 100%;
+}
+
+.graph-bg.ready {
+  opacity: 0.3;
 }
