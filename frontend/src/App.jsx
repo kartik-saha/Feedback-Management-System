@@ -7,16 +7,17 @@ import CreateSurvey from './pages/CreateSurvey/CreateSurvey';
 import Analytics from './pages/Analytics/Analytics';
 import Home from './pages/Home/Home';
 import ViewSurvey from './pages/ViewSurvey/ViewSurvey';
+import SurveyResults from './pages/Analytics/SurveyResults'; // ✅ Import new results page
 
 import usePageTitle from './hooks/usePageTitle';
-import { ToastWrapper } from './components/Toast/Toast'; // ✅ Import your wrapper
+import { ToastWrapper } from './components/Toast/Toast'; // ✅ Toasts
 
 export default function App() {
   usePageTitle();
 
   return (
     <div className="App">
-      <ToastWrapper /> {/* ✅ Always mounted */}
+      <ToastWrapper /> {/* ✅ Toast mount */}
       <Routes>
         <Route
           element={
@@ -35,6 +36,9 @@ export default function App() {
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/survey/:id" element={<ViewSurvey />} />
         </Route>
+
+        {/* ✅ Standalone route for survey result view */}
+        <Route path="/analytics/survey/:id" element={<SurveyResults />} />
       </Routes>
     </div>
   );

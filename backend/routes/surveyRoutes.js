@@ -9,18 +9,18 @@ const {
   getSurveyResponses,
 } = require('../controller/surveyController');
 
-// ✅ Simple test route to ensure route file is properly mounted
+// ✅ Test route
 router.get('/test', (req, res) => {
   res.json({ message: '✅ Survey routes working' });
 });
 
-// ✅ Get current user's surveys
+// ✅ Authenticated routes
 router.get('/mine', auth, getMySurveys);
 
-// ✅ Get responses for a survey
+// ✅ Public routes
 router.get('/:id/responses', getSurveyResponses);
 
-// ✅ Save a new survey
+// ✅ Create a new survey
 router.post('/', auth, async (req, res) => {
   try {
     const { name, segments } = req.body;
@@ -45,24 +45,30 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
-// ✅ DELETE a survey by ID (auth removed as requested)
-router.delete('/:id', async (req, res) => {
+// ✅ Submit a response to a survey
+router.post('/:id/responses', async (req, res) => {
   try {
-    const survey = await Survey.findById(req.params.id);
+    const { id } = req.params;
+    const { answers } = req.body;
 
-    if (!survey) {
-      return res.status(404).json({ message: 'Survey not found' });
+    if (!answers || typeof answers !== 'object') {
+      return res.status(400).json({ message: 'Answers are required in object form' });
     }
 
-    await survey.deleteOne();
-    res.status(200).json({ message: 'Survey deleted successfully' });
+    const survey = await Survey.findById(id);
+    if (!survey) return res.status(404).json({ message: 'Survey not found' });
+
+    survey.responses.push(answers);
+    await survey.save();
+
+    res.status(201).json({ message: 'Response submitted successfully' });
   } catch (err) {
-    console.error('Error deleting survey:', err.message);
-    res.status(500).json({ message: 'Failed to delete survey' });
+    console.error('Error submitting survey response:', err.message);
+    res.status(500).json({ message: 'Failed to submit survey response' });
   }
 });
 
-// ✅ Get individual survey by ID (KEEP THIS LAST)
+// ✅ Get a single survey by ID (keep this LAST)
 router.get('/:id', async (req, res) => {
   try {
     const survey = await Survey.findById(req.params.id);

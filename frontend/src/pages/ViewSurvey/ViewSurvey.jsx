@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { showSuccess, showError } from '../../components/Toast/Toast'; // ✅ Removed ToastWrapper
 import './ViewSurvey.css';
 
 export default function ViewSurvey() {
@@ -22,6 +23,7 @@ export default function ViewSurvey() {
       } catch (err) {
         console.error('Error loading survey:', err);
         setError('Failed to load survey.');
+        showError('Failed to load survey.');
       } finally {
         setLoading(false);
       }
@@ -52,7 +54,7 @@ export default function ViewSurvey() {
     e.preventDefault();
 
     try {
-      const res = await fetch(`http://localhost:5000/api/surveys/${id}/responses`, {
+      const res = await fetch(`http://localhost:5000/api/responses/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -64,10 +66,10 @@ export default function ViewSurvey() {
 
       const result = await res.json();
       console.log('Response saved:', result);
-      alert('Responses submitted successfully!');
+      showSuccess('Responses submitted successfully!');
     } catch (err) {
       console.error('Error submitting response:', err);
-      alert('There was a problem submitting your response.');
+      showError('There was a problem submitting your response.');
     }
   };
 

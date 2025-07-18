@@ -37,6 +37,11 @@ body {
   text-align: center;
 }
 
+.analytics-loading,
+.analytics-error {
+  text-align: center;
+}
+
 .analytics-loading {
   font-style: italic;
 }
@@ -46,34 +51,69 @@ body {
   font-weight: bold;
 }
 
+.center {
+  text-align: center;
+}
+
 .survey-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin-bottom: 20px;
 }
 
 .survey-item {
-  padding: 12px;
-  border: 2px solid var(--btn-1);
+  display: flex;
+  gap: 6px; /* creates a visible space between buttons */
+  align-items: stretch;
+}
+
+/* Survey name button */
+.survey-name-btn {
+  flex: 0 0 90%;
   background-color: transparent;
-  color: var(--primary-font);
+  border: 2px solid var(--btn-1);
   border-radius: 6px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+  color: var(--primary-font);
   cursor: pointer;
-  font-weight: 500;
-  transition: background-color var(--transition-duration), border-color var(--transition-duration);
+  transition: background-color var(--transition-duration), color var(--transition-duration);
 }
 
-.survey-item:hover {
+.survey-name-btn:hover {
+  background-color: var(--btn-1);
+  color: white;
+}
+
+.survey-name-btn.selected {
   background-color: var(--btn-1-hover);
   color: white;
 }
 
-.survey-item.selected {
-  background-color: var(--btn-1-hover);
-  color: white;
-  font-weight: bold;
+/* Copy button */
+.copy-btn {
+  flex: 0 0 10%;
+  background-color: transparent;
+  border: 2px solid var(--btn-1);
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 1.1rem;
+  color: var(--primary-font);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
 
+.copy-btn:hover {
+  background-color: var(--btn-1-hover);
+}
+
+/* Responses section */
 .response-section {
   margin-top: 24px;
 }
@@ -95,6 +135,3 @@ body {
   margin-bottom: 16px;
 }
 
-p .center {
-    text-align: center;
-}
