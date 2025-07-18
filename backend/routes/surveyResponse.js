@@ -1,31 +1,40 @@
 const express = require('express');
 const router = express.Router();
-const Survey = require('../models/Survey');
 const SurveyResponse = require('../models/SurveyResponse');
 
-// Existing survey routes...
-
-// Save survey response
-router.post('/:id/responses', async (req, res) => {
-  const { id } = req.params;
-  const { answers } = req.body;
-
+// Submit a response
+router.post('/:id', async (req, res) => {
   try {
-    const survey = await Survey.findById(id);
-    if (!survey) {
-      return res.status(404).json({ message: 'Survey not found' });
-    }
-
-    const newResponse = new SurveyResponse({
-      surveyId: id,
+    const { answers } = req.body;
+    const response = new SurveyResponse({
+      surveyId: req.params.id,
       answers,
     });
-
-    await newResponse.save();
-    res.status(201).json({ message: 'Response saved successfully' });
+    await response.save();
+    res.status(201).json({ message: 'Response submitted' });
   } catch (err) {
-    console.error('Error saving response:', err);
-    res.status(500).json({ message: 'Server error' });
+    console.error('Error submitting response:', err.message);
+    res.status(500).json({ message: 'Failed to submit response' });
+  }
+});
+
+// Get all responses for a specific survey
+router.get('/:id', async (req, res) => {
+  try {
+    const responses = await SurveyResponse.find({ surveyId: req.params.id });
+
+    const formatted = responses.map((r) => {
+      const result = {};
+      r.answers.forEach((ans) => {
+        result[ans.segmentIndex] = ans.response;
+      });
+      return result;
+    });
+
+    res.status(200).json(formatted);
+  } catch (err) {
+    console.error('Error fetching survey responses:', err.message);
+    res.status(500).json({ message: 'Failed to fetch responses' });
   }
 });
 

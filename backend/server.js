@@ -12,12 +12,12 @@ app.use(express.json());
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const surveyRoutes = require('./routes/survey');
-const surveyResponseRoutes = require('./routes/surveyResponse'); // ✅ NEW
+const surveyResponseRoutes = require('./routes/surveyResponse'); // ✅ renamed usage
 
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/surveys', surveyRoutes);
-app.use('/api/surveys', surveyResponseRoutes); // ✅ Add this
+app.use('/api/responses', surveyResponseRoutes); // ✅ fixed conflict
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {

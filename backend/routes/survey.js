@@ -4,7 +4,21 @@ const Survey = require('../models/Survey');
 const User = require('../models/User');
 const auth = require('../middleware/auth');
 
-// Save a new survey
+const {
+  getMySurveys,
+  getSurveyResponses,
+} = require('../controller/surveyController');
+
+// ✅ Simple test route to ensure route file is properly mounted
+router.get('/test', (req, res) => {
+  res.json({ message: '✅ Survey routes working' });
+});
+
+// ✅ Specific routes should come BEFORE dynamic ones
+router.get('/mine', auth, getMySurveys);
+router.get('/:id/responses', getSurveyResponses);
+
+// ✅ Save a new survey
 router.post('/', auth, async (req, res) => {
   try {
     const { name, segments } = req.body;
@@ -12,13 +26,15 @@ router.post('/', auth, async (req, res) => {
       return res.status(400).json({ message: 'Name and segments are required' });
     }
 
+    // ✅ Find user based on token ID
     const user = await User.findById(req.userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
 
+    // ✅ Store user ID in createdBy
     const newSurvey = new Survey({
       name,
       segments,
-      createdBy: user.username, // Store username
+      createdBy: user._id.toString(),
     });
 
     const savedSurvey = await newSurvey.save();
@@ -29,7 +45,7 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
-// Fetch a survey by ID
+// ✅ Get individual survey by ID (KEEP THIS LAST)
 router.get('/:id', async (req, res) => {
   try {
     const survey = await Survey.findById(req.params.id);

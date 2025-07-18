@@ -1,0 +1,100 @@
+:root {
+  --primary-bg: #f5f7fa;
+  --secondary-bg: #ffffff;
+  --primary-font: #222;
+  --input-bg: #f0f0f0;
+  --btn-1: #007bff;
+  --btn-1-hover: #0056b3;
+  --error-color: #d32f2f;
+  --header-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --transition-duration: 0.4s;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--primary-bg);
+  color: var(--primary-font);
+}
+
+.analytics-page {
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.analytics-container {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.analytics-title {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.analytics-loading {
+  font-style: italic;
+}
+
+.analytics-error {
+  color: var(--error-color);
+  font-weight: bold;
+}
+
+.survey-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.survey-item {
+  padding: 12px;
+  border: 2px solid var(--btn-1);
+  background-color: transparent;
+  color: var(--primary-font);
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color var(--transition-duration), border-color var(--transition-duration);
+}
+
+.survey-item:hover {
+  background-color: var(--btn-1-hover);
+  color: white;
+}
+
+.survey-item.selected {
+  background-color: var(--btn-1-hover);
+  color: white;
+  font-weight: bold;
+}
+
+.response-section {
+  margin-top: 24px;
+}
+
+.response-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.response-block {
+  background-color: var(--secondary-bg);
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: var(--header-shadow);
+  white-space: pre-wrap;
+  font-family: monospace;
+  font-size: 0.95rem;
+  margin-bottom: 16px;
+}
+
+p .center {
+    text-align: center;
+}
