@@ -48,10 +48,27 @@ export default function ViewSurvey() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Responses:', responses);
-    alert('Responses submitted (not actually saved in backend yet).');
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/surveys/${id}/responses`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ answers: responses }),
+      });
+
+      if (!res.ok) throw new Error('Failed to submit survey response');
+
+      const result = await res.json();
+      console.log('Response saved:', result);
+      alert('Responses submitted successfully!');
+    } catch (err) {
+      console.error('Error submitting response:', err);
+      alert('There was a problem submitting your response.');
+    }
   };
 
   if (loading) return <div className="view-page">Loading...</div>;
