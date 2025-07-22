@@ -12,6 +12,15 @@ const responseSchema = new mongoose.Schema({
       response: mongoose.Schema.Types.Mixed,
     },
   ],
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
   submittedAt: {
     type: Date,
     default: Date.now,

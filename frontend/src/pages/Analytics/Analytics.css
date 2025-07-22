@@ -1,18 +1,5 @@
-:root {
-  --primary-bg: #f5f7fa;
-  --secondary-bg: #ffffff;
-  --primary-font: #222;
-  --input-bg: #f0f0f0;
-  --btn-1: #007bff;
-  --btn-1-hover: #0056b3;
-  --error-color: #d32f2f;
-  --header-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --transition-duration: 0.4s;
-}
-
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
   background: var(--primary-bg);
   color: var(--primary-font);
 }
@@ -47,7 +34,7 @@ body {
 }
 
 .analytics-error {
-  color: var(--error-color);
+  color: var(--btn-1);
   font-weight: bold;
 }
 

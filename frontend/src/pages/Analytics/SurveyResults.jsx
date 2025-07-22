@@ -8,6 +8,7 @@ const SurveyResults = () => {
   const [responses, setResponses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [expanded, setExpanded] = useState({});
 
   useEffect(() => {
     const fetchSurveyAndResponses = async () => {
@@ -24,8 +25,6 @@ const SurveyResults = () => {
         const surveyData = await surveyRes.json();
         const responsesData = await responsesRes.json();
 
-        console.log('Survey Responses:', responsesData);
-
         setSurvey(surveyData);
         setResponses(responsesData);
       } catch (err) {
@@ -39,28 +38,41 @@ const SurveyResults = () => {
     fetchSurveyAndResponses();
   }, [id]);
 
-  const getStats = (index, type, options) => {
+  const toggleExpanded = (index) => {
+    setExpanded((prev) => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
+  const getStatsWithUsers = (index, type, options) => {
     const counts = {};
+    const userMap = {};
 
     if (type === 'checkboxes') {
       responses.forEach((r) => {
-        const selected = Array.isArray(r[index]) ? r[index] : [];
+        const selected = Array.isArray(r.answers[index]) ? r.answers[index] : [];
         selected.forEach((opt) => {
           counts[opt] = (counts[opt] || 0) + 1;
+          userMap[opt] = userMap[opt] || [];
+          userMap[opt].push(r.username);
         });
       });
     } else {
       responses.forEach((r) => {
-        const answer = r[index];
+        const answer = r.answers[index];
         if (answer) {
           counts[answer] = (counts[answer] || 0) + 1;
+          userMap[answer] = userMap[answer] || [];
+          userMap[answer].push(r.username);
         }
       });
     }
 
     return options.map((opt) => ({
       label: opt,
-      count: counts[opt] || 0
+      count: counts[opt] || 0,
+      users: userMap[opt] || []
     }));
   };
 
@@ -93,27 +105,53 @@ const SurveyResults = () => {
 
             {(segment.type === 'multiple-choice' || segment.type === 'checkboxes') ? (
               <div className="results-options">
-                {getStats(index, segment.type, segment.options).map((opt, i) => (
-                  <div key={i} className="results-bar">
-                    <span>{opt.label}</span>
-                    <div className="bar-track">
+                {getStatsWithUsers(index, segment.type, segment.options).map((opt, i) => {
+                  const toggleKey = `${index}-${i}`;
+                  return (
+                    <div key={i} className="results-bar-with-users">
                       <div
-                        className="bar-fill"
-                        style={{
-                          width: `${(opt.count / responses.length) * 100}%`
+                        className="bar-header"
+                        onClick={() => {
+                          if (opt.users.length > 0) toggleExpanded(toggleKey);
                         }}
-                      />
-                      <span className="bar-label">{opt.count} responses</span>
+                      >
+                        <span>{opt.label}</span>
+                        <div className="bar-track">
+                          <div
+                            className="bar-fill"
+                            style={{
+                              width: `${(opt.count / responses.length) * 100}%`
+                            }}
+                          />
+                          <span className="bar-label">
+                            {opt.count} responses
+                            {opt.users.length > 0 && (
+                              <span className={`dropdown-arrow ${expanded[toggleKey] ? 'open' : ''}`}>
+                                ▼
+                              </span>
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                      <ul className={`user-list ${expanded[toggleKey] ? 'open' : ''}`}>
+                        {opt.users.map((user, idx) => (
+                          <li key={idx}>{user}</li>
+                        ))}
+                      </ul>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ) : (
               <div className="text-response-block">
+                <p className="text-response-count">
+                  {responses.filter(r => r.answers[index]?.trim()).length} responses
+                </p>
                 {responses.map((r, i) => (
-                  <p key={i} className="text-response">
-                    {r[index] || '[No response]'}
-                  </p>
+                  <div key={i} className="text-response">
+                    <strong>{r.username}: </strong>
+                    {r.answers[index]?.trim() || '[No response]'}
+                  </div>
                 ))}
               </div>
             )}

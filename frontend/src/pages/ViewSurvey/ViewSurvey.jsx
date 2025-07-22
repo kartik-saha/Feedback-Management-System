@@ -9,6 +9,7 @@ export default function ViewSurvey() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [responses, setResponses] = useState({});
+  const [creatorUsername, setCreatorUsername] = useState('');
 
   useEffect(() => {
     const originalTitle = document.title;
@@ -20,6 +21,15 @@ export default function ViewSurvey() {
         const data = await response.json();
         setSurvey(data);
         document.title = data.name || 'Survey';
+
+        // ✅ Updated to match your backend route
+        if (data.createdBy) {
+          const userRes = await fetch(`http://localhost:5000/api/user/${data.createdBy}`);
+          if (userRes.ok) {
+            const userData = await userRes.json();
+            setCreatorUsername(userData.username);
+          }
+        }
       } catch (err) {
         console.error('Error loading survey:', err);
         setError('Failed to load survey.');
@@ -30,6 +40,7 @@ export default function ViewSurvey() {
     };
 
     fetchSurvey();
+
     return () => {
       document.title = originalTitle;
     };
@@ -52,15 +63,18 @@ export default function ViewSurvey() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formattedAnswers = Object.entries(responses).map(([index, response]) => ({
-      segmentIndex: parseInt(index, 10),
-      response,
-    }));
+    const formattedAnswers = Object.entries(responses).reduce((acc, [index, response]) => {
+      acc[index] = response;
+      return acc;
+    }, {});
 
     try {
       const res = await fetch(`http://localhost:5000/api/responses/${id}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
         body: JSON.stringify({ answers: formattedAnswers }),
       });
 
@@ -80,6 +94,7 @@ export default function ViewSurvey() {
     <div className="view-page">
       <form className="view-container" onSubmit={handleSubmit}>
         <h1 className="view-title">{survey.name}</h1>
+        {creatorUsername && <p className="survey-creator-name">- {creatorUsername}</p>}
 
         {survey.segments?.map((segment, index) => (
           <div key={index} className="view-segment">

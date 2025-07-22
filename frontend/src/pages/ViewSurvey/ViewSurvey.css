@@ -86,3 +86,12 @@
 .submit-btn:hover {
   background: var(--btn-1-hover);
 }
+
+.survey-creator-name {
+  text-align: right;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  font-size: 0.9em;
+  font-style: italic;
+  color: #555;
+}
