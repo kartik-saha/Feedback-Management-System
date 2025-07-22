@@ -32,7 +32,7 @@
 }
 
 .bar-track {
-  background-color: #e0e0e0;
+  background-color: var(--secondary-bg);
   border-radius: 6px;
   overflow: hidden;
   position: relative;
@@ -41,7 +41,7 @@
 }
 
 .bar-fill {
-  background-color: #007bff;
+  background-color: var(--btn-1);
   height: 100%;
   transition: width 0.4s ease;
 }
@@ -51,13 +51,13 @@
   right: 10px;
   top: 3px;
   font-size: 0.85rem;
-  color: white;
+  color: var(--primary-font);
   font-weight: bold;
 }
 
 .text-response-block {
   margin-top: 12px;
-  background: #f9f9f9;
+  background-color: var(--secondary-bg);
   padding: 10px;
   border-radius: 6px;
   font-size: 0.95rem;
@@ -65,4 +65,31 @@
 
 .text-response {
   margin-bottom: 8px;
+}
+
+.bar-track {
+  position: relative;
+  background-color: var(--secondary-bg);
+  height: 24px;
+  border-radius: 4px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  background-color: #4caf50;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.bar-label {
+  position: absolute;
+  right: 8px;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--primary-font);
 }

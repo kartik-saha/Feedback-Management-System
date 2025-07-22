@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { showSuccess, showError } from '../../components/Toast/Toast'; // ✅ Removed ToastWrapper
+import { showSuccess, showError } from '../../components/Toast/Toast';
 import './ViewSurvey.css';
 
 export default function ViewSurvey() {
@@ -30,7 +30,6 @@ export default function ViewSurvey() {
     };
 
     fetchSurvey();
-
     return () => {
       document.title = originalTitle;
     };
@@ -53,19 +52,20 @@ export default function ViewSurvey() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const formattedAnswers = Object.entries(responses).map(([index, response]) => ({
+      segmentIndex: parseInt(index, 10),
+      response,
+    }));
+
     try {
       const res = await fetch(`http://localhost:5000/api/responses/${id}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ answers: responses }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ answers: formattedAnswers }),
       });
 
       if (!res.ok) throw new Error('Failed to submit survey response');
 
-      const result = await res.json();
-      console.log('Response saved:', result);
       showSuccess('Responses submitted successfully!');
     } catch (err) {
       console.error('Error submitting response:', err);
@@ -83,42 +83,23 @@ export default function ViewSurvey() {
 
         {survey.segments?.map((segment, index) => (
           <div key={index} className="view-segment">
-            {segment.title && (
-              <input
-                type="text"
-                className="segment-title"
-                value={segment.title}
-                disabled
-              />
-            )}
-
-            {segment.description && (
-              <textarea
-                className="segment-description"
-                value={segment.description}
-                disabled
-              />
-            )}
-
+            {segment.title && <input type="text" className="segment-title" value={segment.title} disabled />}
+            {segment.description && <textarea className="segment-description" value={segment.description} disabled />}
             {segment.type === 'short-answer' && (
               <input
                 type="text"
                 className="view-input"
-                placeholder="Your answer"
                 value={responses[index] || ''}
                 onChange={(e) => handleChange(index, e.target.value)}
               />
             )}
-
             {segment.type === 'paragraph' && (
               <textarea
                 className="view-input"
-                placeholder="Your answer"
                 value={responses[index] || ''}
                 onChange={(e) => handleChange(index, e.target.value)}
               />
             )}
-
             {segment.type === 'multiple-choice' &&
               segment.options?.map((opt, i) => (
                 <div key={i} className="option-input">
@@ -132,7 +113,6 @@ export default function ViewSurvey() {
                   <label>{opt}</label>
                 </div>
               ))}
-
             {segment.type === 'checkboxes' &&
               segment.options?.map((opt, i) => (
                 <div key={i} className="option-input">
@@ -148,9 +128,7 @@ export default function ViewSurvey() {
           </div>
         ))}
 
-        <button type="submit" className="submit-btn">
-          Submit
-        </button>
+        <button type="submit" className="submit-btn">Submit</button>
       </form>
     </div>
   );

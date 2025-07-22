@@ -6,10 +6,18 @@ const SurveyResponse = require('../models/SurveyResponse');
 router.post('/:id', async (req, res) => {
   try {
     const { answers } = req.body;
+
+    // Convert answers object to array format expected by the schema
+    const formattedAnswers = Object.entries(answers).map(([index, response]) => ({
+      segmentIndex: parseInt(index, 10),
+      response,
+    }));
+
     const response = new SurveyResponse({
       surveyId: req.params.id,
-      answers,
+      answers: formattedAnswers,
     });
+
     await response.save();
     res.status(201).json({ message: 'Response submitted' });
   } catch (err) {

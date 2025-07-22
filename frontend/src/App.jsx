@@ -7,18 +7,19 @@ import CreateSurvey from './pages/CreateSurvey/CreateSurvey';
 import Analytics from './pages/Analytics/Analytics';
 import Home from './pages/Home/Home';
 import ViewSurvey from './pages/ViewSurvey/ViewSurvey';
-import SurveyResults from './pages/Analytics/SurveyResults'; // ✅ Import new results page
+import SurveyResults from './pages/Analytics/SurveyResults'; // ✅ Import results page
 
 import usePageTitle from './hooks/usePageTitle';
-import { ToastWrapper } from './components/Toast/Toast'; // ✅ Toasts
+import { ToastWrapper } from './components/Toast/Toast';
 
 export default function App() {
   usePageTitle();
 
   return (
     <div className="App">
-      <ToastWrapper /> {/* ✅ Toast mount */}
+      <ToastWrapper />
       <Routes>
+        {/* ✅ Shared layout for pages with Dashboard */}
         <Route
           element={
             <>
@@ -35,10 +36,10 @@ export default function App() {
           <Route path="/create" element={<CreateSurvey />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/survey/:id" element={<ViewSurvey />} />
-        </Route>
 
-        {/* ✅ Standalone route for survey result view */}
-        <Route path="/analytics/survey/:id" element={<SurveyResults />} />
+          {/* ✅ MOVE SurveyResults inside layout */}
+          <Route path="/analytics/survey/:id" element={<SurveyResults />} />
+        </Route>
       </Routes>
     </div>
   );
