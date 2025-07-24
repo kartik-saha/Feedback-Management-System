@@ -52,14 +52,6 @@ export default function Dashboard() {
             <>
               <button
                 className="icon-btn"
-                title="Notifications"
-                onClick={() => navigate('/notifications')}
-              >
-                <FontAwesomeIcon icon={faBell} />
-              </button>
-
-              <button
-                className="icon-btn"
                 title="Create Survey"
                 onClick={() => navigate('/create')}
               >

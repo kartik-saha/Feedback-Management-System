@@ -3,24 +3,19 @@ const router = express.Router();
 const Survey = require('../models/Survey');
 const User = require('../models/User');
 const auth = require('../middleware/auth');
-
 const {
   getMySurveys,
   getSurveyResponses,
 } = require('../controller/surveyController');
 
-// ✅ Simple test route to ensure route file is properly mounted
 router.get('/test', (req, res) => {
   res.json({ message: '✅ Survey routes working' });
 });
 
-// ✅ Get current user's surveys
 router.get('/mine', auth, getMySurveys);
 
-// ✅ Get responses for a survey
 router.get('/:id/responses', getSurveyResponses);
 
-// ✅ Save a new survey
 router.post('/', auth, async (req, res) => {
   try {
     const { name, segments } = req.body;
@@ -31,9 +26,19 @@ router.post('/', auth, async (req, res) => {
     const user = await User.findById(req.userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
 
+    const cleanedSegments = segments.map(({ id, type, title, description, options, required }) => ({
+      type,
+      title,
+      description,
+      options,
+      required: !!required
+    }));
+
+    console.log('Backend cleaned segments:', cleanedSegments);
+
     const newSurvey = new Survey({
       name,
-      segments,
+      segments: cleanedSegments,
       createdBy: user._id.toString(),
     });
 
@@ -45,11 +50,9 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
-// ✅ DELETE a survey by ID (auth removed as requested)
 router.delete('/:id', async (req, res) => {
   try {
     const survey = await Survey.findById(req.params.id);
-
     if (!survey) {
       return res.status(404).json({ message: 'Survey not found' });
     }
@@ -62,7 +65,6 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// ✅ Get individual survey by ID (KEEP THIS LAST)
 router.get('/:id', async (req, res) => {
   try {
     const survey = await Survey.findById(req.params.id);

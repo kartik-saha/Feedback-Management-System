@@ -124,7 +124,7 @@ const SurveyResults = () => {
                             }}
                           />
                           <span className="bar-label">
-                            {opt.count} responses
+                            {opt.count} 
                             {opt.users.length > 0 && (
                               <span className={`dropdown-arrow ${expanded[toggleKey] ? 'open' : ''}`}>
                                 ▼

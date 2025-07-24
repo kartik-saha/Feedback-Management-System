@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const SurveyResponse = require('../models/SurveyResponse');
+const Survey = require('../models/Survey');
 const requireAuth = require('../middleware/auth');
 const User = require('../models/User');
 
-// Submit a response
 router.post('/:id', requireAuth, async (req, res) => {
   try {
     const { answers } = req.body;
@@ -13,27 +13,48 @@ router.post('/:id', requireAuth, async (req, res) => {
     const user = await User.findById(userId).select('username');
     const username = user?.username || 'Anonymous';
 
+    const survey = await Survey.findById(req.params.id);
+    if (!survey) return res.status(404).json({ message: 'Survey not found' });
+
+    for (let i = 0; i < survey.segments.length; i++) {
+      const segment = survey.segments[i];
+      const answer = answers[i];
+
+      if (segment.required) {
+        const isEmpty =
+          answer === undefined ||
+          answer === '' ||
+          (segment.type === 'checkboxes' && Array.isArray(answer) && answer.length === 0) ||
+          (segment.type === 'rating-feedback' && (!answer || typeof answer.rating !== 'number'));
+
+        if (isEmpty) {
+          return res.status(400).json({
+            message: `Answer required for segment "${segment.title}"`,
+          });
+        }
+      }
+    }
+
     const formattedAnswers = Object.entries(answers).map(([index, response]) => ({
       segmentIndex: parseInt(index, 10),
       response,
     }));
 
-    const response = new SurveyResponse({
+    const responseDoc = new SurveyResponse({
       surveyId: req.params.id,
       answers: formattedAnswers,
       userId,
       username,
     });
 
-    await response.save();
+    await responseDoc.save();
     res.status(201).json({ message: 'Response submitted' });
   } catch (err) {
-    console.error('Error submitting response:', err); // Log full error
+    console.error('Error submitting response:', err);
     res.status(500).json({ message: 'Failed to submit response' });
   }
 });
 
-// Get all responses for a specific survey
 router.get('/:id', async (req, res) => {
   try {
     const responses = await SurveyResponse.find({ surveyId: req.params.id });

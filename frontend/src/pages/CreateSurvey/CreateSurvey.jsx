@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './CreateSurvey.css';
-import { showSuccess, showError } from '../../components/Toast/Toast'; // ✅ Removed ToastWrapper
+import { showSuccess, showError } from '../../components/Toast/Toast';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 export default function CreateSurvey() {
   const [surveyTitle, setSurveyTitle] = useState('Untitled Survey');
@@ -8,6 +9,7 @@ export default function CreateSurvey() {
   const [shareLink, setShareLink] = useState('');
   const [saving, setSaving] = useState(false);
   const [username, setUsername] = useState('');
+  const [hoveredStars, setHoveredStars] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -36,6 +38,7 @@ export default function CreateSurvey() {
       title: '',
       description: '',
       options: [''],
+      required: false,
     };
     setQuestions([...questions, newQuestion]);
   };
@@ -79,6 +82,7 @@ export default function CreateSurvey() {
                 newType === 'multiple-choice' || newType === 'checkboxes'
                   ? ['']
                   : [],
+              required: newType !== 'text' ? q.required ?? false : false,
             }
           : q
       )
@@ -146,10 +150,11 @@ export default function CreateSurvey() {
                 <option value="paragraph">Paragraph</option>
                 <option value="multiple-choice">Multiple Choice</option>
                 <option value="checkboxes">Checkboxes</option>
+                <option value="rating-feedback">Feedback</option>
                 <option value="text">Text Block (No Answer)</option>
               </select>
 
-              {q.type === 'text' && (
+              {q.type !== 'text' && (
                 <input
                   type="text"
                   placeholder="Segment Title"
@@ -161,9 +166,7 @@ export default function CreateSurvey() {
               <textarea
                 placeholder="Segment Description"
                 value={q.description}
-                onChange={(e) =>
-                  updateQuestion(q.id, 'description', e.target.value)
-                }
+                onChange={(e) => updateQuestion(q.id, 'description', e.target.value)}
               />
 
               {q.type === 'short-answer' && (
@@ -184,9 +187,7 @@ export default function CreateSurvey() {
                     <input
                       type="text"
                       value={option}
-                      onChange={(e) =>
-                        updateOption(q.id, index, e.target.value)
-                      }
+                      onChange={(e) => updateOption(q.id, index, e.target.value)}
                       placeholder={`Option ${index + 1}`}
                     />
                   </div>
@@ -201,6 +202,49 @@ export default function CreateSurvey() {
                   + Add Option
                 </button>
               )}
+
+              {q.type === 'rating-feedback' && (
+                <div className="rating-preview-block">
+                  <div className="rating-stars">
+                    {[1, 2, 3, 4, 5].map((n) => (
+                      <span
+                        key={n}
+                        className="star-wrapper"
+                        onMouseEnter={() => setHoveredStars(n)}
+                        onMouseLeave={() => setHoveredStars(null)}
+                      >
+                        <i className="fa fa-star far star-back"></i>
+                        <i
+                          className={`fa fa-star fas star-front ${
+                            hoveredStars >= n ? 'visible' : ''
+                          }`}
+                        ></i>
+                      </span>
+                    ))}
+                  </div>
+                  <textarea
+                    disabled
+                    placeholder="Feedback..."
+                    className="rating-feedback-box"
+                  />
+                </div>
+              )}
+
+              {q.type !== 'text' && (
+                <div className="required-toggle">
+                  <span>Required</span>
+                  <label className="survey-switch">
+                    <input
+                      type="checkbox"
+                      checked={q.required || false}
+                      onChange={(e) =>
+                        updateQuestion(q.id, 'required', e.target.checked)
+                      }
+                    />
+                    <span className="survey-slider round"></span>
+                  </label>
+                </div>
+              )}
             </div>
           ))}
 
@@ -211,14 +255,14 @@ export default function CreateSurvey() {
           <div className="save-share">
             {!shareLink ? (
               <button
-                className="save-btn"
+                className="save-btn centered-btn"
                 onClick={handleSaveSurvey}
                 disabled={saving}
               >
-                {saving ? 'Saving...' : 'Save + Share'}
+                {saving ? 'Saving...' : <i className="fas fa-save"></i>}
               </button>
             ) : (
-              <button className="save-btn" onClick={handleCopyLink}>
+              <button className="save-btn centered-btn" onClick={handleCopyLink}>
                 {shareLink}
               </button>
             )}

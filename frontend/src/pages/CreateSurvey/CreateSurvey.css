@@ -22,14 +22,12 @@ body {
   transition: background-color var(--transition-duration), color var(--text-transition-duration);
 }
 
-/* Shared width */
 .survey-container {
   width: 100%;
   max-width: 700px;
   transition: background-color var(--transition-duration), color var(--text-transition-duration);
 }
 
-/* Title above input */
 .survey-page-title {
   text-align: center;
   margin-bottom: 16px;
@@ -38,7 +36,6 @@ body {
   transition: color var(--text-transition-duration);
 }
 
-/* Input for the survey title */
 .survey-title-input {
   font-size: 1.5rem;
   font-weight: bold;
@@ -53,14 +50,12 @@ body {
   transition: background-color var(--transition-duration), color var(--text-transition-duration);
 }
 
-/* Segment wrapper */
 .survey-builder {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-/* Each question/segment block */
 .question-block {
   background: var(--secondary-bg);
   padding: 20px;
@@ -74,7 +69,6 @@ body {
   transition: background-color var(--transition-duration), color var(--text-transition-duration);
 }
 
-/* Inputs inside each block */
 .question-block input,
 .question-block textarea,
 .question-block select {
@@ -88,14 +82,12 @@ body {
   transition: background-color var(--transition-duration), color var(--text-transition-duration);
 }
 
-/* Multiple choice / checkbox option */
 .option-input {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-/* Add Option button */
 .add-option-btn {
   background: none;
   color: var(--btn-1);
@@ -106,7 +98,6 @@ body {
   transition: color var(--transition-duration);
 }
 
-/* Add Segment button */
 .save-btn {
   background: transparent;
   color: var(--primary-font);
@@ -122,19 +113,6 @@ body {
   background: var(--btn-1-hover);
 }
 
-textarea {
-  font-family: var(--primary-font, inherit);
-  font-size: 1rem;
-  line-height: 1.5;
-  padding: 10px;
-  border-radius: 6px;
-  border: none;
-  background: var(--input-bg);
-  color: var(--primary-font);
-  resize: vertical;
-  transition: background-color var(--transition-duration), color var(--text-transition-duration);
-}
-
 .survey-creator-name {
   text-align: right;
   margin-top: 4px;
@@ -142,4 +120,101 @@ textarea {
   font-size: 0.9em;
   font-style: italic;
   color: #555;
+}
+
+.rating-stars {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-size: 2rem;
+  margin-bottom: 16px;
+  color: var(--primary-font);
+  transition: color 0.2s ease;
+}
+
+.rating-feedback-box {
+  width: 100%;
+}
+
+.required-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.survey-switch {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 22px;
+}
+
+.survey-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.survey-slider {
+  position: absolute;
+  cursor: pointer;
+  background-color: var(--primary-bg);
+  border-radius: 34px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0.4s;
+}
+
+.survey-slider::before {
+  position: absolute;
+  content: '';
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: var(--primary-font);
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.survey-switch input:checked + .survey-slider {
+  background-color: var(--btn-1-hover);
+}
+
+.survey-switch input:checked + .survey-slider::before {
+  transform: translateX(20px);
+}
+
+.centered-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.star-wrapper {
+  position: relative;
+  width: 1em;
+  height: 1em;
+}
+
+.star-back,
+.star-front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.star-front {
+  visibility: hidden;
+}
+
+.star-front.visible {
+  visibility: visible;
 }
